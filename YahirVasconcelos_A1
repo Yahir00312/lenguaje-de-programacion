@@ -1,0 +1,36 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    float num1, num2;
+
+    // Solicitar los valores
+    cout << "Escribe el primer número: ";
+    cin >> num1;
+
+    cout << "Escribe el segundo número: ";
+    cin >> num2;
+
+    // Operaciones
+    float suma = num1 + num2;
+    float resta = num1 - num2;
+    float multiplicacion = num1 * num2;
+    
+    // Evitar división por cero
+    float division;
+    if (num2 != 0) {
+        division = num1 / num2;
+    } else {
+        cout << "La división no se puede realizar (división por cero)." << endl;
+    }
+
+    // Mostrar resultados
+    cout << "La suma es: " << suma << endl;
+    cout << "La resta es: " << resta << endl;
+    cout << "La multiplicación es: " << multiplicacion << endl;
+    
+    if (num2 != 0) {
+        cout << "La división es: " << division << endl;
+    }
+
+    return 0;
