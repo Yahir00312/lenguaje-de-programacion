@@ -1,0 +1,84 @@
+#include <iostream>
+#include <string>
+#include <cctype>
+using namespace std;
+
+class Empleado {
+private:
+    string nombre;
+    string apellidoPaterno;
+    string apellidoMaterno;
+    int dia, mes, anio;
+
+public:
+    void capturarDatos() {
+        cout << "Ingrese el primer nombre: ";
+        cin >> nombre;
+
+        cout << "Ingrese el apellido paterno: ";
+        cin >> apellidoPaterno;
+
+        cout << "Ingrese el apellido materno (si no tiene, escriba X): ";
+        cin >> apellidoMaterno;
+
+        cout << "Ingrese día de nacimiento (DD): ";
+        cin >> dia;
+
+        cout << "Ingrese mes de nacimiento (MM): ";
+        cin >> mes;
+
+        cout << "Ingrese año de nacimiento (AAAA): ";
+        cin >> anio;
+    }
+
+    string obtenerRFC() {
+        string rfc = "";
+
+        // 1. Primera letra del apellido paterno
+        rfc += toupper(apellidoPaterno[0]);
+
+        // 2. Primera vocal interna del apellido paterno
+        bool vocalEncontrada = false;
+        for (size_t i = 1; i < apellidoPaterno.length(); i++) {
+            char c = toupper(apellidoPaterno[i]);
+            if (c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U') {
+                rfc += c;
+                vocalEncontrada = true;
+                break;
+            }
+        }
+        if (!vocalEncontrada) rfc += 'X'; // Por si no hay vocal
+
+        // 3. Inicial del apellido materno o X
+        rfc += (apellidoMaterno == "X" || apellidoMaterno == "x") ? 'X' : toupper(apellidoMaterno[0]);
+
+        // 4. Inicial del nombre
+        rfc += toupper(nombre[0]);
+
+        // 5-6. Últimos dos dígitos del año
+        rfc += to_string(anio).substr(2, 2);
+
+        // 7-8. Mes (2 dígitos)
+        rfc += (mes < 10 ? "0" : "") + to_string(mes);
+
+        // 9-10. Día (2 dígitos)
+        rfc += (dia < 10 ? "0" : "") + to_string(dia);
+
+        // 11-13. Homoclave no se genera (se pone XXX)
+        rfc += "XXX";
+
+        return rfc;
+    }
+
+    void mostrarRFC() {
+        cout << "El RFC generado es: " << obtenerRFC() << endl;
+    }
+};
+
+int main() {
+    Empleado empleado;
+    empleado.capturarDatos();
+    empleado.mostrarRFC();
+
+    return 0;
+}
